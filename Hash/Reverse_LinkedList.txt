@@ -1,0 +1,16 @@
+Reverse A Linked List
+
+Node next = null;
+Node prev = null;
+
+Node HEAD = a;//a is the starting node
+Node curr = a;
+
+while(curr != NULL)
+{
+	next = curr.next;
+	curr.next = previous;
+	prev = curr;
+	curr = next;
+}
+head = prev;
