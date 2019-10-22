@@ -134,24 +134,69 @@ public class ExpressionTree2
 		return t;
     }
 
-    public static void PrintExpression(ExNode t)
+    public static ExNode constructTree2(char infix[],char postfix[])
+    {
+    	ExNode root = new ExNode(postfix[postfix.length -1]);
+    	char[] left = new char[postfix.length/2];
+    	char[] right= new char[postfix.length/2];
+    	int flag = 0,j=0;
+    	for(int i=0;i<infix.length;i++)
+    	{
+    		if(infix[i] != root.data)
+    		{
+    			left[i] = infix[i];
+    		}
+    		else if(infix[i] == root.data)
+    		{
+    			j=i;
+    			flag = 0;
+    			break;
+    		}
+    	}
+    	for(int i=j+1;i<infix.length;i++)
+    	{
+    		right[i] = infix[i];
+    	}
+    	ExNode nleft = new ExNode(postfix[left.length-1]);
+    	ExNode nright = new ExNode(postfix[(left.length+right.length)-1]);
+    	root.left = nleft;
+    	root.right = nright;
+    	constructTree2(left,postfix);
+    	constructTree2(right,postfix);
+    	return root;
+    }
+
+    public static void inorderPrintExpression(ExNode t)
 	{
 		if(t!=null)
 		{
-			PrintExpression(t.left);
+			inorderPrintExpression(t.left);
 			System.out.print(t.data+" ");
-			PrintExpression(t.right);
+			inorderPrintExpression(t.right);
 		}
 	}
-
+/*
+	public static void preorderPrintExpression(ExNode t)
+	{
+		if(t!= null)
+		{
+			System.out.print(t.data);
+			preorderPrintExpression(t.left);
+			preorderPrintExpression(t.right);
+		}
+	}
+*/
     public static void main(String[] args)
     {
     	Scanner in = new Scanner(System.in);
     	String infix = in.next();
     	String res = infixtoPostfix(infix);
+    	System.out.println("Postfix \n"+res);
     	char[] post = res.toCharArray();
-    	ExNode root = constructTree(post);
-    	PrintExpression(root);
-    	System.out.println(res);
+    	char[] inf = infix.toCharArray();
+    	ExNode root = constructTree2(post,inf);
+    	System.out.println("Inorder");
+    	inorderPrintExpression(root);
+    	//System.out.println(res);
     }
 }
