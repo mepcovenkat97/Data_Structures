@@ -74,4 +74,23 @@ public class BinarySearchTree
 			inorder(n.right);
 		}
 	}
+	public void preorder(Node t)
+	{
+		if(t!= null)
+		{
+			System.out.print(t.data);
+			preorder(t.left);
+			preorder(t.right);
+		}
+	}
+
+	public void postorderPrintExpression(ExNode t)
+	{
+		if(t!= null)
+		{
+			postorder(t.left);
+			postorder(t.right);
+			System.out.println(t.data);
+		}
+	}
 }

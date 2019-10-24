@@ -137,33 +137,85 @@ public class ExpressionTree2
     public static ExNode constructTree2(char infix[],char postfix[])
     {
     	ExNode root = new ExNode(postfix[postfix.length -1]);
-    	char[] left = new char[postfix.length/2];
-    	char[] right= new char[postfix.length/2];
-    	int flag = 0,j=0;
+    	int p = 0,j=0;
     	for(int i=0;i<infix.length;i++)
     	{
-    		if(infix[i] != root.data)
+    		if(infix[i] == root.data)
     		{
-    			left[i] = infix[i];
-    		}
-    		else if(infix[i] == root.data)
-    		{
-    			j=i;
-    			flag = 0;
+    			p=i;
+    			j=i+1;
     			break;
+   			}
+    	}
+    	if(p>=2)
+    	{
+    		char leftin[]= new char[infix.length-p];
+    		char leftpost[]= new char[infix.length-p];
+    		char rightin[]= new char[infix.length-p-1];
+    		char rightpost[] = new char[infix.length-p-1];
+    		int flag = 0,z=0;
+    		for(int i=0;i<p;i++)
+    		{
+    			leftin[i] = infix[i];
+    			leftpost[i] = postfix[i];
+    			z=i+1;
+    		}
+    		int k =0,q=0;
+    		for(int i=z;i<postfix.length-1;i++)
+    		{
+    			q=i+1;
+    			rightin[k] = infix[q];
+    			rightpost[k] = postfix[i];
+    			k++;
+    		}
+    		ExNode nleft = constructTree2(leftin,leftpost);
+    		//System.out.println("3  =>"+nleft.data);
+    		root.left = nleft;
+    		ExNode nright = constructTree2(rightin,rightpost);
+    		//System.out.println("4  =>"+nright.data);
+    		root.right = nright;
+    		return root;
+    	}
+    	else if(p == 1)
+    	{
+    		if(infix.length/2 == p)
+    		{
+    			ExNode nleft = new ExNode(infix[0]);
+    			ExNode nright = new ExNode(infix[infix.length -1]);
+    			root.left = nleft;
+    			root.right = nright;
+    			return root;
     		}
     	}
-    	for(int i=j+1;i<infix.length;i++)
+    	else
     	{
-    		right[i] = infix[i];
+    		ExNode nright;
+    		ExNode nleft;
+    		if(infix.length > 1)
+    		{
+    			nright = new ExNode(infix[infix.length-1]);
+    			root.right = nright;
+    		}
+    	 	else if(postfix.length > 1)
+    		{
+    			nleft = new ExNode(postfix[postfix.length-1]);
+    			root.left = nleft;
+    		}
+    		
+    		return root;
     	}
-    	ExNode nleft = new ExNode(postfix[left.length-1]);
-    	ExNode nright = new ExNode(postfix[(left.length+right.length)-1]);
-    	root.left = nleft;
-    	root.right = nright;
-    	constructTree2(left,postfix);
-    	constructTree2(right,postfix);
     	return root;
+    }
+
+    public static ExNode constructTree3(char prefix[], char postfix[], int start, int end)
+    {
+    	ExNode root = new ExNode(postfix[end])
+    	if(start == end) return null;
+    	for(int i=0;i<prefix.length;i++)
+    	{
+    		if(prefix[i] == postfix[end--])
+    			left[i] = prefix[i]
+    	}
     }
 
     public static void inorderPrintExpression(ExNode t)
@@ -175,28 +227,24 @@ public class ExpressionTree2
 			inorderPrintExpression(t.right);
 		}
 	}
-/*
-	public static void preorderPrintExpression(ExNode t)
-	{
-		if(t!= null)
-		{
-			System.out.print(t.data);
-			preorderPrintExpression(t.left);
-			preorderPrintExpression(t.right);
-		}
-	}
-*/
+
     public static void main(String[] args)
     {
-    	Scanner in = new Scanner(System.in);
-    	String infix = in.next();
-    	String res = infixtoPostfix(infix);
-    	System.out.println("Postfix \n"+res);
-    	char[] post = res.toCharArray();
-    	char[] inf = infix.toCharArray();
-    	ExNode root = constructTree2(post,inf);
-    	System.out.println("Inorder");
+    	// Scanner in = new Scanner(System.in);
+    	// String infix = in.next();
+    	// String res = infixtoPostfix(infix);
+    	// //System.out.println("Postfix \n"+res);
+    	// char[] post = res.toCharArray();
+    	// char[] inf = infix.toCharArray();
+    	
+
+    	char[] post = {'8','4','5','2','6','7','3','1'};
+    	char[] inf  = {'4','8','2','5','1','6','3','7'};
+    	ExNode root = constructTree2(inf,post);
+    	//ExNode root = constructTree(post);
+    	//System.out.println("Inorder");
     	inorderPrintExpression(root);
+    	System.out.println();
     	//System.out.println(res);
     }
 }
