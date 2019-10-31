@@ -74,6 +74,36 @@ public class BinarySearchTree
 			inorder(n.right);
 		}
 	}
+
+	public void inorderWithout(Node n)
+	{
+		Node current = n;
+		while(current != null)
+		{
+			if(current.left == null)
+			{
+				System.out.print(current.data+" ");
+				current = current.right;
+			}
+			else
+			{
+				Node predecessor = current.left;
+				while(predecessor.right != null && predecessor.right != current)
+					predecessor = predecessor.right;
+				if(predecessor.right == null)
+				{
+					predecessor.right = current;
+					current = current.left;
+				}
+				else
+				{
+					predecessor.right = null;
+					System.out.print(current.data+" ");
+					current = current.right;
+				}
+			}
+		}
+	}
 	public void preorder(Node t)
 	{
 		if(t!= null)

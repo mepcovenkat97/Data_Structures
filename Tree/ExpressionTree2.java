@@ -169,10 +169,8 @@ public class ExpressionTree2
     			k++;
     		}
     		ExNode nleft = constructTree2(leftin,leftpost);
-    		//System.out.println("3  =>"+nleft.data);
     		root.left = nleft;
     		ExNode nright = constructTree2(rightin,rightpost);
-    		//System.out.println("4  =>"+nright.data);
     		root.right = nright;
     		return root;
     	}
@@ -205,17 +203,6 @@ public class ExpressionTree2
     		return root;
     	}
     	return root;
-    }
-
-    public static ExNode constructTree3(char prefix[], char postfix[], int start, int end)
-    {
-    	ExNode root = new ExNode(postfix[end])
-    	if(start == end) return null;
-    	for(int i=0;i<prefix.length;i++)
-    	{
-    		if(prefix[i] == postfix[end--])
-    			left[i] = prefix[i]
-    	}
     }
 
     public static void inorderPrintExpression(ExNode t)
