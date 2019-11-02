@@ -228,8 +228,6 @@ public class ExpressionTree2
     	char[] post = {'8','4','5','2','6','7','3','1'};
     	char[] inf  = {'4','8','2','5','1','6','3','7'};
     	ExNode root = constructTree2(inf,post);
-    	//ExNode root = constructTree(post);
-    	//System.out.println("Inorder");
     	inorderPrintExpression(root);
     	System.out.println();
     	//System.out.println(res);

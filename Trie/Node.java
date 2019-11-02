@@ -1,13 +1,13 @@
 class Node
 {
-	Node[] child;
+	Node[] child = new Node[26];
 	char val;
 	boolean isEnd;
 	Node()
 	{
 		isEnd = false;
-		//for(int i=0;i<26;i++)
-		// 	child[i] = null;
+		for(int i=0;i<26;i++)
+		 	child[i] = null;
 	}
 	Node(char c)
 	{
